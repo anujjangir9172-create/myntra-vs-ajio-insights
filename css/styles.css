@@ -401,6 +401,7 @@ a { color: var(--text-primary); }
 .hero h1 em {
   font-style: italic;
   font-weight: 500;
+  margin-right: 0.12em;
 }
 .hero h1 em.hl-blue { color: var(--series-myntra); }
 .hero h1 em.hl-ajio { color: var(--series-ajio); }
