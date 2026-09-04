@@ -11,7 +11,7 @@
   const $ = (sel) => document.querySelector(sel);
   const brandIcon = (k) =>
     k === "myntra"
-      ? `<img class="brand-icon" src="assets/myntra-logo.png" alt="" />`
+      ? `<img class="brand-icon" src="assets/myntra-icon.png" alt="" />`
       : `<img class="brand-icon brand-icon-ajio" src="assets/ajio-icon.avif" alt="" />`;
   const fmtCompact = (n) =>
     n >= 1_000_000 ? (n / 1_000_000).toFixed(1) + "M" : n >= 1_000 ? (n / 1_000).toFixed(1) + "K" : String(n);

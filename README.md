@@ -27,12 +27,14 @@ assets/                Brand logos + category photography (see below)
 identification purposes on this independent comparison site (no
 affiliation with or endorsement by Myntra or Reliance/Ajio implied):
 
-- `myntra-logo.png` — Myntra's own wordmark, served from their site
-  (`constant.myntassets.com`).
+- `myntra-icon.png` — Myntra's official app icon (the "M" mark), served
+  from their site (`constant.myntassets.com`).
 - `ajio-icon.avif` — Ajio's official app icon, served from their site
-  (`assets-jiocdn.ajio.com`). Ajio's own header uses styled text rather
-  than a logo image, so the "AJIO" wordmark on this site is recreated in
-  CSS to match.
+  (`assets-jiocdn.ajio.com`).
+- Both brands' header logos on this site pair their icon with a styled
+  text wordmark ("MYNTRA" / "AJIO") rather than a full logo image — Ajio's
+  own site does the same (their header is styled text, no logo image),
+  and Myntra's is matched to it for a consistent icon+wordmark treatment.
 - `myntra-fashion.jpg`, `ajio-fashion.jpg` — category-representative
   fashion photography from [Unsplash](https://unsplash.com), used under
   the [Unsplash License](https://unsplash.com/license) (free for
