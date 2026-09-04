@@ -1006,13 +1006,31 @@ section.block {
   }
 }
 
-/* Narrative strip under two-card (grid-2) sections */
+/* Narrative strip under two-card (grid-2) sections — a tinted editorial
+   panel with its own two-column magazine-style read, distinct from the
+   plain paragraph a flat callout would give. */
 .note-strip {
-  margin-top: 26px;
-  padding-top: 22px;
-  border-top: 1px solid var(--hairline);
+  margin-top: 32px;
+  padding: 34px 40px 38px;
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--gold);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--gold-soft) 11%, var(--surface-1)), var(--surface-1) 62%);
+  overflow: hidden;
 }
-.note-strip p { max-width: 74ch; }
+.note-strip::before { top: 6px; left: 18px; font-size: 68px; }
+.note-strip .note-title { font-size: 21px; }
+.note-strip p {
+  max-width: none;
+  column-count: 2;
+  column-gap: 42px;
+}
+
+@media (max-width: 780px) {
+  .note-strip p { column-count: 1; }
+}
+@media (max-width: 520px) {
+  .note-strip { padding: 26px 22px 30px; }
+}
 
 /* Computed brand-vs-brand gap, baked directly into each KPI tile */
 .kpi-gap {
