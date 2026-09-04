@@ -27,6 +27,8 @@
     renderCompetitors();
     renderFullTable();
     initTheme();
+    initScrollReveal();
+    initStatCounters();
   }
 
   function renderMeta() {
@@ -82,7 +84,7 @@
     return `
       <div class="row">
         <div class="cat">${label}</div>
-        <div class="bar-track"><div class="bar-fill" style="width:${pct}%; --fill:${color}"></div></div>
+        <div class="bar-track"><div class="bar-fill" style="--w:${pct}%; --fill:${color}"></div></div>
         <div class="val">${displayVal}</div>
       </div>`;
   }
@@ -105,7 +107,7 @@
       <div>
         <div class="col-title"><span class="dot" style="background:${fill}"></span>${label} · Direct</div>
         <div class="meter" style="--track:${track}">
-          <div class="meter-fill" style="width:${pct}%; --fill:${fill}">${pct.toFixed(2)}%</div>
+          <div class="meter-fill" style="--w:${pct}%; --fill:${fill}">${pct.toFixed(2)}%</div>
         </div>
       </div>`;
   }
@@ -130,7 +132,7 @@
             <div class="cat">${r.country}</div>
             <div class="bar-track">${
               m != null
-                ? `<div class="bar-fill" style="width:${Math.max((m / max) * 100, 2)}%; --fill:var(--series-myntra)"></div>`
+                ? `<div class="bar-fill" style="--w:${Math.max((m / max) * 100, 2)}%; --fill:var(--series-myntra)"></div>`
                 : `<span style="font-size:11.5px;color:var(--text-muted)">no data</span>`
             }</div>
             <div class="val">${m != null ? m.toFixed(2) + "%" : "—"}</div>
@@ -139,7 +141,7 @@
             <div class="cat"></div>
             <div class="bar-track">${
               a != null
-                ? `<div class="bar-fill" style="width:${Math.max((a / max) * 100, 2)}%; --fill:var(--series-ajio)"></div>`
+                ? `<div class="bar-fill" style="--w:${Math.max((a / max) * 100, 2)}%; --fill:var(--series-ajio)"></div>`
                 : `<span style="font-size:11.5px;color:var(--text-muted)">no data</span>`
             }</div>
             <div class="val">${a != null ? a.toFixed(2) + "%" : "—"}</div>
@@ -170,8 +172,8 @@
             ["Female", "var(--series-female)"],
           ])}</div>
           <div class="stack-bar">
-            <div class="seg male" style="width:${g.male}%">${g.male.toFixed(1)}%</div>
-            <div class="seg female" style="width:${g.female}%">${g.female.toFixed(1)}%</div>
+            <div class="seg male" style="--w:${g.male}%">${g.male.toFixed(1)}%</div>
+            <div class="seg female" style="--w:${g.female}%">${g.female.toFixed(1)}%</div>
           </div>
           <p class="geo-note">Primary age group: ${g.topAge}</p>
         </div>`;
@@ -250,6 +252,56 @@
       const next = isDark ? "light" : "dark";
       document.documentElement.setAttribute("data-theme", next);
       safeSet("theme", next);
+    });
+  }
+
+  // ---------- Scroll-triggered reveal (sections fade in, bars grow) ----------
+  function initScrollReveal() {
+    const sections = document.querySelectorAll("section.block");
+    if (!sections.length) return;
+
+    if (!("IntersectionObserver" in window)) {
+      sections.forEach((s) => s.classList.add("in-view"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+  }
+
+  // ---------- Hero stat counters ----------
+  function initStatCounters() {
+    const nums = document.querySelectorAll(".stat-num");
+    if (!nums.length) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    nums.forEach((el) => {
+      const target = parseInt(el.textContent.replace(/[^\d]/g, ""), 10);
+      if (Number.isNaN(target) || reduceMotion) return;
+
+      const suffix = el.textContent.replace(/[\d,]/g, "");
+      const duration = 900;
+      const start = performance.now();
+
+      el.textContent = "0" + suffix;
+      requestAnimationFrame(function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      });
     });
   }
 
