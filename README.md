@@ -1,8 +1,10 @@
 # Myntra vs Ajio — Website Performance Insights
 
 A static HTML5 site comparing the website performance of **Myntra.com** and
-**Ajio.com** — traffic, engagement, geography, demographics and rankings —
-built from [SimilarWeb](https://www.similarweb.com) analytics.
+**Ajio.com** — traffic, engagement, marketing channels, geography,
+demographics, search performance, referral traffic, rankings and the wider
+category landscape — built from [SimilarWeb](https://www.similarweb.com)
+Pro data.
 
 Live site: `https://<your-username>.github.io/<repo-name>/` (see **Deploy**
 below once GitHub Pages is enabled).
@@ -46,17 +48,26 @@ affiliation with or endorsement by Myntra or Reliance/Ajio implied):
 
 ## Data
 
-Sourced from SimilarWeb's public website-analytics pages
-([myntra.com](https://www.similarweb.com/website/myntra.com/),
-[ajio.com](https://www.similarweb.com/website/ajio.com/)), which use the same
-estimation engine as the SimilarWeb Pro "Website Performance" dashboard, for
-the trailing 3-month / Total-traffic window. Retrieved 2026-09-04.
+Sourced from a **SimilarWeb Pro** trial session — Website Performance,
+Marketing Channels, Audience (Geography, Demographics), Search and Referral
+reports — for `myntra.com` and `ajio.com`, Worldwide, All traffic, trailing
+3-month window (May–Jul 2026). Retrieved 2026-09-04. Covers:
 
-**To refresh with newer numbers** (e.g. pulled from the SimilarWeb Pro
-dashboard via the browser extension): open `js/data.js` and update the
+- Headline KPIs (visits, rank, bounce rate, pages/visit, duration, audience)
+- Full 10-channel marketing-channel breakdown (direct, search, social, etc.)
+- Audience geography (top secondary markets) and demographics (gender + age)
+- Search performance (organic vs. paid, keywords, spend, branded share)
+- Incoming referral traffic and top referring sites
+- Global / country / category / industry rankings
+- Closest competitors by affinity, and the wider category landscape
+  (Amazon.in, Flipkart, Nykaa Fashion) for context
+
+**To refresh with newer numbers**: open `js/data.js` and update the
 `SITE_DATA` object — every section of the page re-renders from that one file,
 nothing else needs to change. Update `SITE_DATA.meta.retrieved` /
-`SITE_DATA.meta.asOf` too.
+`SITE_DATA.meta.asOf` too. A SimilarWeb Pro login (even a trial) is needed for
+the channel/search/referral breakdowns; the free public tier only exposes the
+headline KPIs and top-line geography/demographics.
 
 ## Run locally
 

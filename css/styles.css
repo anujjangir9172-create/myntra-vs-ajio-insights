@@ -289,9 +289,10 @@ a { color: var(--text-primary); }
   background: var(--surface-1);
   border-left: 1px solid var(--hairline);
   box-shadow: -16px 0 48px rgba(0, 0, 0, 0.18);
-  padding: 96px 32px 32px;
+  padding: 88px 32px 32px;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
   transform: translateX(100%);
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -301,10 +302,10 @@ a { color: var(--text-primary); }
 
 .mobile-drawer nav a {
   font-family: var(--font-display);
-  font-size: 21px;
+  font-size: 17px;
   color: var(--text-primary);
   text-decoration: none;
-  padding: 13px 0;
+  padding: 10px 0;
   border-bottom: 1px solid var(--hairline);
   opacity: 0;
   transform: translateX(20px);
@@ -319,6 +320,8 @@ a { color: var(--text-primary); }
 .mobile-drawer nav a:nth-child(6) { transition-delay: 0.25s; }
 .mobile-drawer nav a:nth-child(7) { transition-delay: 0.29s; }
 .mobile-drawer nav a:nth-child(8) { transition-delay: 0.33s; }
+.mobile-drawer nav a:nth-child(9) { transition-delay: 0.37s; }
+.mobile-drawer nav a:nth-child(10) { transition-delay: 0.41s; }
 
 .mobile-theme-toggle {
   margin-top: 28px;
@@ -754,6 +757,78 @@ section.block {
 }
 .stack-bar .seg.male { background: var(--series-male); color: #06281d; }
 .stack-bar .seg.female { background: var(--series-female); color: #2b1c00; }
+
+/* ---------- Age distribution mini bar chart ---------- */
+
+.age-chart {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin-top: 18px;
+  align-items: end;
+}
+
+.age-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.age-bar-track {
+  width: 100%;
+  height: 72px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.age-bar-fill {
+  width: 100%;
+  height: var(--h);
+  min-height: 3px;
+  background: var(--series-myntra);
+}
+
+.age-pct {
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.age-label {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* ---------- Search performance mini stats ---------- */
+
+.search-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--hairline);
+}
+
+.search-stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat-k {
+  font-size: 17px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-l {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
 
 .geo-note {
   font-size: 12.5px;
