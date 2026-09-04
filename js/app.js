@@ -15,6 +15,8 @@
       : `<img class="brand-icon brand-icon-ajio" src="assets/ajio-icon.avif" alt="" />`;
   const fmtCompact = (n) =>
     n >= 1_000_000 ? (n / 1_000_000).toFixed(1) + "M" : n >= 1_000 ? (n / 1_000).toFixed(1) + "K" : String(n);
+  const reduceMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const finePointer = () => window.matchMedia("(pointer: fine)").matches;
 
   function init() {
     renderMeta();
@@ -26,9 +28,33 @@
     renderRankings();
     renderCompetitors();
     renderFullTable();
+    renderMarquee();
     initTheme();
     initScrollReveal();
     initStatCounters();
+    initScrollProgress();
+    initStickyHeader();
+    initHeroSpotlight();
+    initCustomCursor();
+    initMagneticButtons();
+    initParallax();
+  }
+
+  // ---------- Marquee ticker ----------
+  function renderMarquee() {
+    const track = $("#marqueeTrack");
+    if (!track) return;
+    const rank = SITE_DATA.rankings[0];
+    const bounce = SITE_DATA.kpis.find((k) => k.id === "bounce");
+    const items = [
+      "Myntra vs Ajio",
+      `${fmtCompact(SITE_DATA.visits.myntra)} vs ${fmtCompact(SITE_DATA.visits.ajio)} monthly visits`,
+      `Global rank ${rank.myntra} vs ${rank.ajio}`,
+      `Bounce rate ${bounce.myntra.display} vs ${bounce.ajio.display}`,
+      SITE_DATA.meta.asOf,
+    ];
+    const html = items.map((t) => `<span>${t}</span><span class="dot">✦</span>`).join("");
+    track.innerHTML = html + html; // duplicated once for a seamless loop
   }
 
   function renderMeta() {
@@ -285,11 +311,9 @@
     const nums = document.querySelectorAll(".stat-num");
     if (!nums.length) return;
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     nums.forEach((el) => {
       const target = parseInt(el.textContent.replace(/[^\d]/g, ""), 10);
-      if (Number.isNaN(target) || reduceMotion) return;
+      if (Number.isNaN(target) || reduceMotion()) return;
 
       const suffix = el.textContent.replace(/[\d,]/g, "");
       const duration = 900;
@@ -303,6 +327,140 @@
         if (progress < 1) requestAnimationFrame(tick);
       });
     });
+  }
+
+  // ---------- Scroll progress bar ----------
+  function initScrollProgress() {
+    const bar = $("#scrollProgress");
+    if (!bar) return;
+    let ticking = false;
+
+    function update() {
+      const el = document.documentElement;
+      const scrollable = el.scrollHeight - el.clientHeight;
+      bar.style.width = (scrollable > 0 ? (el.scrollTop / scrollable) * 100 : 0) + "%";
+      ticking = false;
+    }
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+    update();
+  }
+
+  // ---------- Sticky header glass effect ----------
+  function initStickyHeader() {
+    const header = document.querySelector(".site-header");
+    if (!header) return;
+
+    function update() {
+      header.classList.toggle("scrolled", window.scrollY > 8);
+    }
+
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+  }
+
+  // ---------- Hero cursor-reactive spotlight ----------
+  function initHeroSpotlight() {
+    if (reduceMotion() || !finePointer()) return;
+    const hero = document.querySelector(".hero");
+    if (!hero) return;
+
+    hero.addEventListener("mousemove", (e) => {
+      const r = hero.getBoundingClientRect();
+      hero.style.setProperty("--spot-x", ((e.clientX - r.left) / r.width) * 100 + "%");
+      hero.style.setProperty("--spot-y", ((e.clientY - r.top) / r.height) * 100 + "%");
+    });
+  }
+
+  // ---------- Custom cursor (fine-pointer devices, motion allowed) ----------
+  function initCustomCursor() {
+    if (reduceMotion() || !finePointer()) return;
+
+    const dot = document.createElement("div");
+    dot.className = "cursor-dot";
+    const ring = document.createElement("div");
+    ring.className = "cursor-ring";
+    document.body.append(dot, ring);
+    document.body.classList.add("has-custom-cursor");
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let ringX = mouseX;
+    let ringY = mouseY;
+
+    window.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+    });
+
+    document.querySelectorAll("a, button, summary").forEach((el) => {
+      el.addEventListener("mouseenter", () => ring.classList.add("is-active"));
+      el.addEventListener("mouseleave", () => ring.classList.remove("is-active"));
+    });
+
+    (function loop() {
+      ringX += (mouseX - ringX) * 0.18;
+      ringY += (mouseY - ringY) * 0.18;
+      ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+      requestAnimationFrame(loop);
+    })();
+  }
+
+  // ---------- Magnetic buttons ----------
+  function initMagneticButtons() {
+    if (reduceMotion() || !finePointer()) return;
+
+    document.querySelectorAll(".btn").forEach((btn) => {
+      btn.addEventListener("mousemove", (e) => {
+        const r = btn.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width / 2;
+        const y = e.clientY - r.top - r.height / 2;
+        btn.style.transform = `translate(${x * 0.25}px, ${y * 0.35}px)`;
+      });
+      btn.addEventListener("mouseleave", () => {
+        btn.style.transform = "";
+      });
+    });
+  }
+
+  // ---------- Parallax on hero brand photos ----------
+  function initParallax() {
+    if (reduceMotion()) return;
+    const photos = document.querySelectorAll(".brand-photo");
+    if (!photos.length) return;
+    let ticking = false;
+
+    function update() {
+      photos.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        const center = r.top + r.height / 2 - window.innerHeight / 2;
+        const offset = Math.max(Math.min(center * -0.05, 16), -16);
+        el.style.transform = `translateY(${offset}px)`;
+      });
+      ticking = false;
+    }
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+    update();
   }
 
   function safeGet(key) {
