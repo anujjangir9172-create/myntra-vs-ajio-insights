@@ -6,26 +6,34 @@
   <title>Myntra vs Ajio — Website Performance Insights</title>
   <meta name="description" content="A side-by-side website performance comparison of Myntra and Ajio: traffic, engagement, geography, demographics and rankings, sourced from SimilarWeb." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%232a78d6%22/><rect x=%2252%22 width=%2248%22 height=%22100%22 rx=%220%22 fill=%22%23eb6834%22/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
   <header class="site-header">
     <div class="wrap">
-      <div class="brand-mark"><span class="dot-myntra">Myntra</span> vs <span class="dot-ajio">Ajio</span></div>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">🌓 Toggle theme</button>
+      <div class="brand-mark">MYNTRA <em>vs</em> AJIO</div>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">TOGGLE THEME</button>
     </div>
   </header>
 
   <main>
     <section class="hero">
       <div class="wrap">
-        <h1>Website performance: Myntra vs Ajio</h1>
+        <span class="eyebrow">Comparative Analysis</span>
+        <h1>Website performance<br /><em>Myntra</em> vs <em>Ajio</em></h1>
         <p class="lede">
           A data-driven comparison of India's two largest fashion e-commerce platforms —
           traffic, engagement, audience geography, demographics and competitive rank —
           sourced from SimilarWeb's website analytics.
         </p>
+        <div class="hero-actions">
+          <a href="#kpis" class="btn btn-solid">View metrics</a>
+          <a href="#rawdata" class="btn btn-outline">Full data</a>
+        </div>
         <div class="meta-row">
           <span class="pill" id="pillTimeframe">Last 3 months · Total traffic</span>
           <span class="pill" id="pillAsOf">Data as of July 2026</span>
@@ -38,7 +46,10 @@
     <section class="block" id="kpis">
       <div class="wrap">
         <div class="block-head">
-          <h2>Headline metrics</h2>
+          <div>
+            <span class="eyebrow">Overview</span>
+            <h2>Headline metrics</h2>
+          </div>
           <span class="sub">3-month trailing window</span>
         </div>
         <div class="kpi-grid" id="kpiGrid"></div>
@@ -49,7 +60,10 @@
     <section class="block" id="visits">
       <div class="wrap">
         <div class="block-head">
-          <h2>Total visits</h2>
+          <div>
+            <span class="eyebrow">Traffic</span>
+            <h2>Total visits</h2>
+          </div>
           <span class="sub">Last 3 months, Total traffic</span>
         </div>
         <div class="card">
@@ -63,7 +77,10 @@
     <section class="block" id="sources">
       <div class="wrap">
         <div class="block-head">
-          <h2>Direct traffic share</h2>
+          <div>
+            <span class="eyebrow">Acquisition</span>
+            <h2>Direct traffic share</h2>
+          </div>
           <span class="sub">Direct visits vs. all other channels combined</span>
         </div>
         <div class="card">
@@ -77,7 +94,10 @@
     <section class="block" id="geo">
       <div class="wrap">
         <div class="block-head">
-          <h2>Audience geography</h2>
+          <div>
+            <span class="eyebrow">Markets</span>
+            <h2>Audience geography</h2>
+          </div>
           <span class="sub">Secondary markets (India excluded — see note)</span>
         </div>
         <div class="card">
@@ -92,7 +112,10 @@
     <section class="block" id="demo">
       <div class="wrap">
         <div class="block-head">
-          <h2>Audience demographics</h2>
+          <div>
+            <span class="eyebrow">Audience</span>
+            <h2>Demographics</h2>
+          </div>
           <span class="sub">Gender split · primary age group 25–34 for both</span>
         </div>
         <div class="grid-2" id="demoGrid"></div>
@@ -103,7 +126,10 @@
     <section class="block" id="rankings">
       <div class="wrap">
         <div class="block-head">
-          <h2>Rankings</h2>
+          <div>
+            <span class="eyebrow">Standing</span>
+            <h2>Rankings</h2>
+          </div>
           <span class="sub">Global, country and category rank</span>
         </div>
         <div class="card">
@@ -116,7 +142,10 @@
     <section class="block" id="competitors">
       <div class="wrap">
         <div class="block-head">
-          <h2>Closest competitors</h2>
+          <div>
+            <span class="eyebrow">Landscape</span>
+            <h2>Closest competitors</h2>
+          </div>
           <span class="sub">By SimilarWeb affinity score</span>
         </div>
         <div class="grid-2" id="competitorGrid"></div>
@@ -137,15 +166,30 @@
   </main>
 
   <footer class="site-footer">
-    <div class="wrap">
-      <p><strong>Data source &amp; methodology.</strong> Figures are pulled from SimilarWeb's publicly available website analytics
-        (<a href="https://www.similarweb.com/website/myntra.com/" target="_blank" rel="noopener">myntra.com</a> ·
-        <a href="https://www.similarweb.com/website/ajio.com/" target="_blank" rel="noopener">ajio.com</a>),
-        which use the same underlying estimation engine as the SimilarWeb Pro "Website Performance" dashboard, for the trailing
-        3-month, Total-traffic window. Some Pro-only breakdowns (per-channel traffic-source percentages, full monthly time
-        series) aren't exposed on the public tier and are intentionally omitted rather than estimated.</p>
-      <p>Retrieved 2026-09-04 · SimilarWeb-dated as of July 2026. Traffic estimates change as SimilarWeb refreshes its models — treat as directional, not exact.</p>
-      <p>Built with HTML5, CSS and vanilla JS · hosted on GitHub Pages.</p>
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <div class="brand-mark">MYNTRA <em>vs</em> AJIO</div>
+        <p>A data-driven comparison of India's two largest fashion e-commerce platforms.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Data</h3>
+        <ul>
+          <li><a href="https://www.similarweb.com/website/myntra.com/" target="_blank" rel="noopener">myntra.com ↗</a></li>
+          <li><a href="https://www.similarweb.com/website/ajio.com/" target="_blank" rel="noopener">ajio.com ↗</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Methodology</h3>
+        <p>Figures use SimilarWeb's public estimation engine for the trailing 3-month, Total-traffic window. Pro-only breakdowns (per-channel percentages, monthly series) are omitted rather than estimated.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Built with</h3>
+        <p>HTML5, CSS &amp; vanilla JS<br />Hosted on GitHub Pages</p>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <span>© 2026 Myntra vs Ajio Insights. All rights reserved.</span>
+      <span>Retrieved 2026-09-04 · SimilarWeb-dated as of July 2026.</span>
     </div>
   </footer>
 
