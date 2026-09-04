@@ -898,34 +898,118 @@ section.block {
   border-top: 1px dashed var(--hairline);
 }
 
-/* ---------- Written analysis callouts ---------- */
+/* ---------- Marketer's-take narrative (data-linked, not boxed) ---------- */
 
-.analysis {
-  margin-top: 20px;
-  padding: 22px 26px;
-  border-left: 3px solid var(--gold);
-  background: color-mix(in srgb, var(--gold-soft) 10%, transparent);
-}
-
-.analysis-label {
-  display: block;
+[data-analysis] .note-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 10.5px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+}
+[data-analysis] .note-label::before {
+  content: "";
+  display: inline-block;
+  width: 22px;
+  height: 1px;
+  background: var(--gold);
 }
 
-.analysis p {
+[data-analysis] p {
   margin: 0;
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 500;
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 16.5px;
+  line-height: 1.65;
   color: var(--text-primary);
-  max-width: 78ch;
+}
+
+[data-analysis] p::first-letter {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 2.5em;
+  line-height: 0.78;
+  float: left;
+  padding: 3px 6px 0 0;
+  color: var(--gold);
+}
+
+/* Inline stat figures — color-matched to each brand's own chart color so the
+   narrative reads as a continuation of the chart, not separate commentary. */
+.fig {
+  font-style: normal;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.fig.m { color: var(--series-myntra); }
+.fig.a { color: var(--series-ajio); }
+.fig:not(.m):not(.a) { color: var(--gold); }
+
+/* Chart + narrative side by side; the narrative stays pinned in view while
+   its chart scrolls past, so the two never separate as you read. */
+.section-split {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 20px 48px;
+  align-items: start;
+}
+.split-note {
+  position: sticky;
+  top: 104px;
+  padding-left: 28px;
+  border-left: 1px solid var(--hairline);
+}
+
+@media (max-width: 960px) {
+  .section-split { grid-template-columns: 1fr; }
+  .split-note {
+    position: static;
+    padding: 22px 0 0;
+    margin-top: 4px;
+    border-left: none;
+    border-top: 1px solid var(--hairline);
+  }
+}
+
+/* Narrative strip under two-card (grid-2) sections */
+.note-strip {
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid var(--hairline);
+}
+.note-strip p { max-width: 74ch; }
+
+/* Computed brand-vs-brand gap, baked directly into each KPI tile */
+.kpi-gap {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--hairline);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.kpi-gap.myntra { color: var(--series-myntra); }
+.kpi-gap.ajio { color: var(--series-ajio); }
+
+/* Small pinned annotation on a specific chart row */
+.chart-pin-row { margin: 2px 0 6px 152px; }
+@media (max-width: 720px) {
+  .chart-pin-row { margin-left: 108px; }
+}
+.chart-pin {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--gold);
+  background: color-mix(in srgb, var(--gold-soft) 22%, transparent);
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
 }
 
 /* ---------- Executive verdict band ---------- */
@@ -939,6 +1023,35 @@ section.block {
 }
 
 .verdict .eyebrow { justify-content: center; }
+
+.verdict-stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 26px;
+}
+.verdict-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 12px 22px;
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+}
+.verdict-chip .v {
+  font-family: var(--font-display);
+  font-size: 21px;
+  color: var(--gold);
+}
+.verdict-chip .l {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
 
 .verdict p {
   margin: 0 auto;
@@ -1147,14 +1260,24 @@ html { scroll-behavior: smooth; }
     transform: translateY(18px);
     transition: opacity 0.65s ease, transform 0.65s ease;
   }
+  section.block .split-note,
+  section.block .note-strip {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
   section.block.in-view .block-head { transition-delay: 0s; }
   section.block.in-view .card,
   section.block.in-view .kpi-grid,
   section.block.in-view .grid-2 { transition-delay: 0.1s; }
+  section.block.in-view .split-note,
+  section.block.in-view .note-strip { transition-delay: 0.22s; }
   section.block.in-view .block-head,
   section.block.in-view .card,
   section.block.in-view .kpi-grid,
-  section.block.in-view .grid-2 {
+  section.block.in-view .grid-2,
+  section.block.in-view .split-note,
+  section.block.in-view .note-strip {
     opacity: 1;
     transform: translateY(0);
   }

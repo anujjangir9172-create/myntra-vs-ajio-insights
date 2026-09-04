@@ -66,12 +66,30 @@
   // ---------- Written analysis (digital-marketing lens) ----------
   function renderAnalysis() {
     const verdict = $("#verdictText");
-    if (verdict) verdict.textContent = SITE_DATA.analysis.summary;
+    if (verdict) verdict.innerHTML = SITE_DATA.analysis.summary;
 
+    const statsEl = $("#verdictStats");
+    if (statsEl) {
+      const visitsRatio = SITE_DATA.visits.myntra / SITE_DATA.visits.ajio;
+      const bounce = SITE_DATA.kpis.find((k) => k.id === "bounce");
+      const bounceDiff = Math.abs(bounce.ajio.value - bounce.myntra.value);
+      const topTerm = SITE_DATA.search.myntra.topSearchTerm;
+      const chips = [
+        { v: visitsRatio.toFixed(1) + "×", l: "Traffic gap" },
+        { v: bounceDiff.toFixed(1) + " pts", l: "Bounce-rate edge" },
+        { v: "+" + Math.round(topTerm.yoy) + "%", l: '"Ajio" search, YoY' },
+      ];
+      statsEl.innerHTML = chips
+        .map((c) => `<div class="verdict-chip"><span class="v">${c.v}</span><span class="l">${c.l}</span></div>`)
+        .join("");
+    }
+
+    // Rendered via innerHTML — SITE_DATA.analysis strings carry their own
+    // trusted <span class="fig m|a"> markup (see js/data.js), not user input.
     document.querySelectorAll("[data-analysis]").forEach((el) => {
       const text = SITE_DATA.analysis[el.dataset.analysis];
       const p = el.querySelector("p");
-      if (text && p) p.textContent = text;
+      if (text && p) p.innerHTML = text;
     });
   }
 
@@ -81,6 +99,24 @@
   }
 
   // ---------- KPI tiles ----------
+  // Computes who's ahead on a tile and by how much, formatted per the
+  // metric's unit, so the "gap" is inferred straight from the chart's own
+  // numbers rather than restated in prose elsewhere.
+  function kpiGap(k) {
+    const lower = !!k.lowerIsBetter;
+    const mv = k.myntra.value, av = k.ajio.value;
+    const myntraWins = lower ? mv < av : mv > av;
+    const winner = myntraWins ? "myntra" : "ajio";
+    const winnerLabel = myntraWins ? "Myntra" : "Ajio";
+    let stat;
+    if (k.unit === "%") stat = `Δ ${Math.abs(mv - av).toFixed(1)} pts`;
+    else if (k.unit === "rank") stat = `${(Math.max(mv, av) / Math.min(mv, av)).toFixed(1)}×`;
+    else if (k.unit === "pages") stat = `Δ ${Math.abs(mv - av).toFixed(2)}`;
+    else if (k.unit === "seconds") stat = `Δ ${Math.abs(mv - av)}s`;
+    else stat = `${(Math.max(mv, av) / Math.min(mv, av)).toFixed(1)}×`;
+    return { winner, label: `${winnerLabel} edge · ${stat}` };
+  }
+
   function renderKpis() {
     const grid = $("#kpiGrid");
     grid.innerHTML = SITE_DATA.kpis
@@ -91,6 +127,7 @@
         const trendAjio = k.ajio.trend
           ? `<span class="trend ${k.ajio.trendDir || "flat"}">${k.ajio.trend}</span>`
           : "";
+        const gap = kpiGap(k);
         return `
         <div class="kpi-tile">
           <div class="kpi-label">${k.label}</div>
@@ -102,6 +139,7 @@
             <span class="who">${brandIcon("ajio")}Ajio</span>
             <span class="val">${k.ajio.display}${trendAjio}</span>
           </div>
+          <div class="kpi-gap ${gap.winner}">${gap.label}</div>
         </div>`;
       })
       .join("");
@@ -145,6 +183,10 @@
       .map((c) => {
         const m = myntra[c] || 0;
         const a = ajio[c] || 0;
+        const pin =
+          c === "affiliates" && m > 0
+            ? `<div class="chart-pin-row"><span class="chart-pin">${(a / m).toFixed(1)}× Myntra's affiliate share</span></div>`
+            : "";
         return `
         <div class="bar-group">
           <div class="row">
@@ -157,6 +199,7 @@
             <div class="bar-track"><div class="bar-fill" style="--w:${Math.max((a / max) * 100, 2)}%; --fill:var(--series-ajio)"></div></div>
             <div class="val">${a.toFixed(2)}%</div>
           </div>
+          ${pin}
         </div>`;
       })
       .join("");
@@ -277,7 +320,7 @@
           </div>
           ${
             d.topSearchTerm
-              ? `<p class="geo-note">Top search term driving traffic: <strong>"${d.topSearchTerm.term}"</strong> — ${d.topSearchTerm.clicks} clicks (${d.topSearchTerm.yoy > 0 ? "+" : ""}${d.topSearchTerm.yoy}% YoY)</p>`
+              ? `<p class="geo-note">Top search term driving traffic: <strong>"${d.topSearchTerm.term}"</strong> — ${d.topSearchTerm.clicks} clicks (<span class="fig ${k === "myntra" ? "m" : "a"}">${d.topSearchTerm.yoy > 0 ? "+" : ""}${d.topSearchTerm.yoy}% YoY</span>)</p>`
               : ""
           }
         </div>`;
