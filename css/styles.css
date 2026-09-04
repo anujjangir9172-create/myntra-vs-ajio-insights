@@ -146,13 +146,16 @@ a { color: var(--text-primary); }
   font-family: var(--font-display);
   font-weight: 500;
   letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--text-primary);
+  line-height: 1;
 }
 
 .logo-myntra-icon {
   height: 22px;
   width: 22px;
-  border-radius: 6px;
+  border-radius: 50%;
+  object-fit: cover;
   display: block;
 }
 
