@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Myntra vs Ajio — Website Performance Insights</title>
+  <meta name="description" content="A side-by-side website performance comparison of Myntra and Ajio: traffic, engagement, geography, demographics and rankings, sourced from SimilarWeb." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%232a78d6%22/><rect x=%2252%22 width=%2248%22 height=%22100%22 rx=%220%22 fill=%22%23eb6834%22/></svg>" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <div class="brand-mark"><span class="dot-myntra">Myntra</span> vs <span class="dot-ajio">Ajio</span></div>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">🌓 Toggle theme</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <h1>Website performance: Myntra vs Ajio</h1>
+        <p class="lede">
+          A data-driven comparison of India's two largest fashion e-commerce platforms —
+          traffic, engagement, audience geography, demographics and competitive rank —
+          sourced from SimilarWeb's website analytics.
+        </p>
+        <div class="meta-row">
+          <span class="pill" id="pillTimeframe">Last 3 months · Total traffic</span>
+          <span class="pill" id="pillAsOf">Data as of July 2026</span>
+          <span class="pill">Source: <a href="https://www.similarweb.com" target="_blank" rel="noopener">SimilarWeb</a></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- KPI ROW -->
+    <section class="block" id="kpis">
+      <div class="wrap">
+        <div class="block-head">
+          <h2>Headline metrics</h2>
+          <span class="sub">3-month trailing window</span>
+        </div>
+        <div class="kpi-grid" id="kpiGrid"></div>
+      </div>
+    </section>
+
+    <!-- VISITS -->
+    <section class="block" id="visits">
+      <div class="wrap">
+        <div class="block-head">
+          <h2>Total visits</h2>
+          <span class="sub">Last 3 months, Total traffic</span>
+        </div>
+        <div class="card">
+          <div class="legend" id="visitsLegend"></div>
+          <div class="bar-chart" id="visitsChart"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRAFFIC SOURCES -->
+    <section class="block" id="sources">
+      <div class="wrap">
+        <div class="block-head">
+          <h2>Direct traffic share</h2>
+          <span class="sub">Direct visits vs. all other channels combined</span>
+        </div>
+        <div class="card">
+          <div class="bar-group" id="sourcesChart"></div>
+          <p class="geo-note" id="sourcesNote"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GEOGRAPHY -->
+    <section class="block" id="geo">
+      <div class="wrap">
+        <div class="block-head">
+          <h2>Audience geography</h2>
+          <span class="sub">Secondary markets (India excluded — see note)</span>
+        </div>
+        <div class="card">
+          <div class="legend" id="geoLegend"></div>
+          <div class="bar-chart" id="geoChart"></div>
+          <p class="geo-note" id="geoNote"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEMOGRAPHICS -->
+    <section class="block" id="demo">
+      <div class="wrap">
+        <div class="block-head">
+          <h2>Audience demographics</h2>
+          <span class="sub">Gender split · primary age group 25–34 for both</span>
+        </div>
+        <div class="grid-2" id="demoGrid"></div>
+      </div>
+    </section>
+
+    <!-- RANKINGS -->
+    <section class="block" id="rankings">
+      <div class="wrap">
+        <div class="block-head">
+          <h2>Rankings</h2>
+          <span class="sub">Global, country and category rank</span>
+        </div>
+        <div class="card">
+          <table class="data-table" id="rankTable"></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPETITORS -->
+    <section class="block" id="competitors">
+      <div class="wrap">
+        <div class="block-head">
+          <h2>Closest competitors</h2>
+          <span class="sub">By SimilarWeb affinity score</span>
+        </div>
+        <div class="grid-2" id="competitorGrid"></div>
+      </div>
+    </section>
+
+    <!-- RAW DATA -->
+    <section class="block" id="rawdata">
+      <div class="wrap">
+        <details class="raw-data">
+          <summary>View full data table (accessible / screen-reader view)</summary>
+          <div class="card" style="margin-top:12px;">
+            <table class="data-table" id="fullTable"></table>
+          </div>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><strong>Data source &amp; methodology.</strong> Figures are pulled from SimilarWeb's publicly available website analytics
+        (<a href="https://www.similarweb.com/website/myntra.com/" target="_blank" rel="noopener">myntra.com</a> ·
+        <a href="https://www.similarweb.com/website/ajio.com/" target="_blank" rel="noopener">ajio.com</a>),
+        which use the same underlying estimation engine as the SimilarWeb Pro "Website Performance" dashboard, for the trailing
+        3-month, Total-traffic window. Some Pro-only breakdowns (per-channel traffic-source percentages, full monthly time
+        series) aren't exposed on the public tier and are intentionally omitted rather than estimated.</p>
+      <p>Retrieved 2026-09-04 · SimilarWeb-dated as of July 2026. Traffic estimates change as SimilarWeb refreshes its models — treat as directional, not exact.</p>
+      <p>Built with HTML5, CSS and vanilla JS · hosted on GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

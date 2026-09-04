@@ -1,0 +1,8 @@
+# Secrets — never commit
+env-github
+*.token
+.env
+
+# OS
+.DS_Store
+Thumbs.db
