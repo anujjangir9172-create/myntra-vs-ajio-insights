@@ -9,6 +9,10 @@
   "use strict";
 
   const $ = (sel) => document.querySelector(sel);
+  const brandIcon = (k) =>
+    k === "myntra"
+      ? `<img class="brand-icon" src="assets/myntra-logo.png" alt="" />`
+      : `<img class="brand-icon brand-icon-ajio" src="assets/ajio-icon.avif" alt="" />`;
   const fmtCompact = (n) =>
     n >= 1_000_000 ? (n / 1_000_000).toFixed(1) + "M" : n >= 1_000 ? (n / 1_000).toFixed(1) + "K" : String(n);
 
@@ -45,11 +49,11 @@
         <div class="kpi-tile">
           <div class="kpi-label">${k.label}</div>
           <div class="kpi-row">
-            <span class="who"><span class="dot" style="background:var(--series-myntra)"></span>Myntra</span>
+            <span class="who">${brandIcon("myntra")}Myntra</span>
             <span class="val">${k.myntra.display}${trendMyntra}</span>
           </div>
           <div class="kpi-row">
-            <span class="who"><span class="dot" style="background:var(--series-ajio)"></span>Ajio</span>
+            <span class="who">${brandIcon("ajio")}Ajio</span>
             <span class="val">${k.ajio.display}${trendAjio}</span>
           </div>
         </div>`;
@@ -160,7 +164,7 @@
         const g = d[k];
         return `
         <div class="card">
-          <div class="col-title"><span class="dot" style="background:var(--series-${k})"></span>${brand.label}</div>
+          <div class="col-title">${brandIcon(k)}${brand.label}</div>
           <div class="legend">${legendHtml([
             ["Male", "var(--series-male)"],
             ["Female", "var(--series-female)"],
@@ -195,7 +199,7 @@
         const list = c[k];
         return `
         <div class="card">
-          <div class="col-title"><span class="dot" style="background:var(--series-${k})"></span>${brand.label}'s closest sites</div>
+          <div class="col-title">${brandIcon(k)}${brand.label}'s closest sites</div>
           ${list
             .map(
               (item) => `

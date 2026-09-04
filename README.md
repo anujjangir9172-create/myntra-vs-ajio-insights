@@ -16,7 +16,25 @@ index.html          Page structure
 css/styles.css       Theming (light/dark), layout, chart components
 js/data.js            The dataset — edit this to refresh numbers
 js/app.js              Renders data.js into the DOM
+assets/                Brand logos + category photography (see below)
 ```
+
+## Assets
+
+`assets/` holds real brand marks and representative photography, used for
+identification purposes on this independent comparison site (no
+affiliation with or endorsement by Myntra or Reliance/Ajio implied):
+
+- `myntra-logo.png` — Myntra's own wordmark, served from their site
+  (`constant.myntassets.com`).
+- `ajio-icon.avif` — Ajio's official app icon, served from their site
+  (`assets-jiocdn.ajio.com`). Ajio's own header uses styled text rather
+  than a logo image, so the "AJIO" wordmark on this site is recreated in
+  CSS to match.
+- `myntra-fashion.jpg`, `ajio-fashion.jpg` — category-representative
+  fashion photography from [Unsplash](https://unsplash.com), used under
+  the [Unsplash License](https://unsplash.com/license) (free for
+  commercial and personal use).
 
 ## Data
 
