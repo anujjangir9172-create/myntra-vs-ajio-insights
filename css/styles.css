@@ -704,14 +704,37 @@ section.block {
   position: relative;
   height: 22px;
   background: transparent;
+  border-radius: 3px;
+  transition: transform 0.2s ease;
 }
 
 .bar-fill {
   height: 22px;
   max-height: 22px;
   width: var(--w);
-  background: var(--fill, var(--series-myntra));
+  background: linear-gradient(90deg, color-mix(in srgb, var(--fill, var(--series-myntra)) 78%, black), var(--fill, var(--series-myntra)) 55%, color-mix(in srgb, var(--fill, var(--series-myntra)) 72%, white));
   min-width: 3px;
+  position: relative;
+  overflow: hidden;
+  transition: filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bar-fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 60%);
+  pointer-events: none;
+}
+
+.bar-chart .row:hover .bar-track,
+.bar-group .row:hover .bar-track {
+  transform: scaleY(1.08);
+}
+.bar-chart .row:hover .bar-fill,
+.bar-group .row:hover .bar-fill {
+  filter: brightness(1.08);
+  box-shadow: 0 3px 16px color-mix(in srgb, var(--fill, var(--series-myntra)) 60%, transparent);
 }
 
 .bar-chart .row .val {
@@ -737,10 +760,16 @@ section.block {
   background: var(--track, var(--series-myntra-track));
   overflow: hidden;
 }
+.meter {
+  transition: transform 0.2s ease;
+}
+.meter:hover {
+  transform: scaleY(1.08);
+}
 .meter .meter-fill {
   height: 100%;
   width: var(--w);
-  background: var(--fill, var(--series-myntra));
+  background: linear-gradient(90deg, color-mix(in srgb, var(--fill, var(--series-myntra)) 80%, black), var(--fill, var(--series-myntra)) 60%, color-mix(in srgb, var(--fill, var(--series-myntra)) 75%, white));
   display: flex;
   align-items: center;
   padding-left: 10px;
@@ -748,6 +777,11 @@ section.block {
   font-weight: 600;
   color: #fff;
   min-width: 44px;
+  transition: filter 0.2s ease, box-shadow 0.2s ease;
+}
+.meter:hover .meter-fill {
+  filter: brightness(1.08);
+  box-shadow: 0 3px 16px color-mix(in srgb, var(--fill, var(--series-myntra)) 55%, transparent);
 }
 
 /* Two-segment stacked bar (gender) */
@@ -765,9 +799,17 @@ section.block {
   font-size: 11.5px;
   font-weight: 600;
   color: var(--text-primary);
+  transition: filter 0.2s ease;
 }
-.stack-bar .seg.male { background: var(--series-male); color: #06281d; }
-.stack-bar .seg.female { background: var(--series-female); color: #2b1c00; }
+.stack-bar .seg:hover { filter: brightness(1.1); }
+.stack-bar .seg.male {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--series-male) 80%, black), var(--series-male) 65%, color-mix(in srgb, var(--series-male) 70%, white));
+  color: #06281d;
+}
+.stack-bar .seg.female {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--series-female) 80%, black), var(--series-female) 65%, color-mix(in srgb, var(--series-female) 70%, white));
+  color: #2b1c00;
+}
 
 /* ---------- Age distribution mini bar chart ---------- */
 
@@ -797,7 +839,14 @@ section.block {
   width: 100%;
   height: var(--h);
   min-height: 3px;
-  background: var(--series-myntra);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--fill, var(--series-myntra)) 75%, white), var(--fill, var(--series-myntra)) 60%, color-mix(in srgb, var(--fill, var(--series-myntra)) 82%, black));
+  transition: filter 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  transform-origin: bottom;
+}
+.age-col:hover .age-bar-fill {
+  filter: brightness(1.12);
+  transform: scaleX(1.12);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--fill, var(--series-myntra)) 55%, transparent);
 }
 
 .age-pct {

@@ -217,7 +217,7 @@
             <div class="seg male" style="--w:${g.male}%">${g.male.toFixed(1)}%</div>
             <div class="seg female" style="--w:${g.female}%">${g.female.toFixed(1)}%</div>
           </div>
-          <div class="age-chart">
+          <div class="age-chart" style="--fill:var(--series-${k})">
             ${Object.entries(g.age)
               .map(
                 ([band, pct]) => `
@@ -579,7 +579,10 @@
     if (!sections.length) return;
 
     if (!("IntersectionObserver" in window)) {
-      sections.forEach((s) => s.classList.add("in-view"));
+      sections.forEach((s) => {
+        s.classList.add("in-view");
+        animateCounters(s);
+      });
       return;
     }
 
@@ -588,6 +591,7 @@
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("in-view");
+            animateCounters(entry.target);
             observer.unobserve(entry.target);
           }
         });
@@ -596,6 +600,35 @@
     );
 
     sections.forEach((s) => observer.observe(s));
+  }
+
+  // ---------- Chart number count-up (synced with bar/meter growth) ----------
+  function animateCounters(container) {
+    if (reduceMotion()) return;
+    const els = container.querySelectorAll(".bar-chart .row .val, .meter-fill, .age-pct, .stack-bar .seg");
+
+    els.forEach((el) => {
+      const text = el.textContent.trim();
+      const match = text.match(/^([^\d]*)([\d,]+\.?\d*)(.*)$/);
+      if (!match) return;
+      const [, prefix, numStr, suffix] = match;
+      const target = parseFloat(numStr.replace(/,/g, ""));
+      if (Number.isNaN(target)) return;
+
+      const decimals = (numStr.split(".")[1] || "").length;
+      const useGrouping = numStr.replace(".", "").length > 3;
+      const duration = 900;
+      const start = performance.now();
+
+      requestAnimationFrame(function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const val = target * eased;
+        const formatted = decimals > 0 ? val.toFixed(decimals) : Math.round(val).toLocaleString(useGrouping ? "en-US" : undefined);
+        el.textContent = prefix + formatted + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      });
+    });
   }
 
   // ---------- Hero stat counters ----------
