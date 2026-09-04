@@ -898,6 +898,59 @@ section.block {
   border-top: 1px dashed var(--hairline);
 }
 
+/* ---------- Written analysis callouts ---------- */
+
+.analysis {
+  margin-top: 20px;
+  padding: 22px 26px;
+  border-left: 3px solid var(--gold);
+  background: color-mix(in srgb, var(--gold-soft) 10%, transparent);
+}
+
+.analysis-label {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.analysis p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  max-width: 78ch;
+}
+
+/* ---------- Executive verdict band ---------- */
+
+.verdict {
+  padding: 48px 0;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  background: color-mix(in srgb, var(--gold-soft) 6%, transparent);
+  text-align: center;
+}
+
+.verdict .eyebrow { justify-content: center; }
+
+.verdict p {
+  margin: 0 auto;
+  max-width: 66ch;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(17px, 2.2vw, 21px);
+  line-height: 1.55;
+  color: var(--text-primary);
+}
+
 /* ---------- Two-column layout ---------- */
 
 .grid-2 {

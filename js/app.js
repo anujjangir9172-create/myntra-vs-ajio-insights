@@ -32,6 +32,7 @@
     renderCategoryLeaders();
     renderFullTable();
     renderMarquee();
+    renderAnalysis();
     initTheme();
     initMobileMenu();
     initBoomerangHero();
@@ -60,6 +61,18 @@
     ];
     const html = items.map((t) => `<span>${t}</span><span class="dot">✦</span>`).join("");
     track.innerHTML = html + html; // duplicated once for a seamless loop
+  }
+
+  // ---------- Written analysis (digital-marketing lens) ----------
+  function renderAnalysis() {
+    const verdict = $("#verdictText");
+    if (verdict) verdict.textContent = SITE_DATA.analysis.summary;
+
+    document.querySelectorAll("[data-analysis]").forEach((el) => {
+      const text = SITE_DATA.analysis[el.dataset.analysis];
+      const p = el.querySelector("p");
+      if (text && p) p.textContent = text;
+    });
   }
 
   function renderMeta() {
