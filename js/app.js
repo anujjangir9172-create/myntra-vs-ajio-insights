@@ -68,6 +68,9 @@
     const verdict = $("#verdictText");
     if (verdict) verdict.innerHTML = SITE_DATA.analysis.summary;
 
+    const verdictTitle = $("#verdictTitle");
+    if (verdictTitle) verdictTitle.textContent = SITE_DATA.analysis.summaryTitle;
+
     const statsEl = $("#verdictStats");
     if (statsEl) {
       const visitsRatio = SITE_DATA.visits.myntra / SITE_DATA.visits.ajio;
@@ -87,9 +90,13 @@
     // Rendered via innerHTML — SITE_DATA.analysis strings carry their own
     // trusted <span class="fig m|a"> markup (see js/data.js), not user input.
     document.querySelectorAll("[data-analysis]").forEach((el) => {
-      const text = SITE_DATA.analysis[el.dataset.analysis];
+      const key = el.dataset.analysis;
+      const text = SITE_DATA.analysis[key];
+      const title = SITE_DATA.analysis[key + "Title"];
       const p = el.querySelector("p");
+      const h = el.querySelector(".note-title");
       if (text && p) p.innerHTML = text;
+      if (title && h) h.textContent = title;
     });
   }
 

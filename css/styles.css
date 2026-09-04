@@ -898,25 +898,54 @@ section.block {
   border-top: 1px dashed var(--hairline);
 }
 
-/* ---------- Marketer's-take narrative (data-linked, not boxed) ---------- */
+/* ---------- Analysis narrative (data-linked, not boxed) ---------- */
 
-[data-analysis] .note-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 12px;
+[data-analysis] {
+  position: relative;
 }
-[data-analysis] .note-label::before {
+
+/* A large, faint pull-quote glyph behind each note — an editorial cue that
+   this is a read of the data, not another data point. */
+[data-analysis]::before {
+  content: "\201C";
+  position: absolute;
+  top: -30px;
+  left: 2px;
+  font-family: var(--font-display);
+  font-size: 92px;
+  color: var(--gold-soft);
+  opacity: 0.4;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+[data-analysis] .note-title,
+[data-analysis] p {
+  position: relative;
+  z-index: 1;
+}
+
+[data-analysis] .note-title {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+[data-analysis] .note-title::before {
   content: "";
   display: inline-block;
-  width: 22px;
+  width: 20px;
   height: 1px;
+  flex: none;
   background: var(--gold);
+  transform: translateY(-4px);
 }
 
 [data-analysis] p {
@@ -964,6 +993,7 @@ section.block {
   padding-left: 28px;
   border-left: 1px solid var(--hairline);
 }
+.split-note::before { left: 30px; }
 
 @media (max-width: 960px) {
   .section-split { grid-template-columns: 1fr; }
@@ -1023,6 +1053,17 @@ section.block {
 }
 
 .verdict .eyebrow { justify-content: center; }
+
+.verdict-title {
+  margin: 0 auto 26px;
+  max-width: 46ch;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(24px, 3.4vw, 36px);
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
 
 .verdict-stats {
   display: flex;

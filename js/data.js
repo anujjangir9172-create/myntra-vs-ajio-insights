@@ -262,28 +262,50 @@ const SITE_DATA = {
   // brand it belongs to (blue = Myntra, orange = Ajio, gold = neutral/combined)
   // so the narrative reads as a continuation of the chart's own color
   // language, not separate commentary. Rendered via innerHTML — see
-  // renderAnalysis() in app.js.
+  // renderAnalysis() in app.js. Each section carries its own short editorial
+  // headline (`<key>Title`) instead of a repeated generic label.
   analysis: {
+    summaryTitle: "Two growth strategies, one scoreboard",
     summary:
       "This isn't just a traffic gap — it's two growth strategies caught mid-execution. Myntra reads like a brand in the harvest phase: strong organic pull, stickier engagement, and enough equity that shoppers search its rival's name and land on Myntra's own turf. Ajio reads like a brand still in acquisition mode — leaning on affiliates and paid channels to manufacture volume, then bleeding a chunk of it straight back out through a bounce rate <span class=\"fig a\">12+ points</span> higher and a referral graph that flows overwhelmingly toward its competitor, not away from it. Unless the channel mix shifts, the CAC-to-retention math only gets harder from here.",
+
+    kpisTitle: "The funnel tells the truth",
     kpis:
       "Read this row as a funnel health check, not a scoreboard. Myntra's lower bounce rate (<span class=\"fig m\">45.2%</span> vs <span class=\"fig a\">57.5%</span>) and higher pages/visit (<span class=\"fig m\">6.09</span> vs <span class=\"fig a\">5.12</span>) point to a stickier on-site experience — the kind that compounds into better conversion economics over time — while Ajio's numbers look more like a brand still fighting for the first impression than nurturing a relationship.",
+
+    visitsTitle: "A gap that keeps widening",
     visits:
       "A <span class=\"fig\">3.9×</span> visit gap that's widening, not narrowing: Ajio's <span class=\"fig a\">-19.3% MoM</span> move is the kind of trendline that should force a hard look at the acquisition mix, because scale alone never fixes a leaky funnel. The real question this chart raises for a growth team isn't 'how do we get more traffic' — it's 'why isn't the traffic we already have converting into share.'",
+
+    channelsTitle: "Rented traffic vs. owned audience",
     channels:
       "The clearest tell of two different playbooks in the whole dataset. Ajio's affiliate share (<span class=\"fig a\">12.31%</span>, ~<span class=\"fig\">7×</span> Myntra's <span class=\"fig m\">1.77%</span>) is a performance-marketing crutch — it buys volume but rents it, since affiliate traffic typically converts at a discount and evaporates the moment commissions get cut. Myntra's edge in organic social (<span class=\"fig m\">7.03%</span> vs <span class=\"fig a\">1.98%</span>) is the opposite: audience built rather than rented, exactly the mix a CMO wants scaling because it doesn't vanish when the budget does.",
+
+    geoTitle: "Home turf, uncontested",
     geo:
       "With <span class=\"fig\">~98%</span> of traffic domestic for both, neither brand has an international lever doing any real work yet. The near-identical footprint abroad (US, UK and UAE leading for either) means any global expansion play starts from the same blank page for both — the entire battle, for now, is still 100% about winning India.",
+
+    demographicsTitle: "Same audience, different outcome",
     demographics:
       "Near-identical audience shape — both skew male, both peak at <span class=\"fig\">25-34</span>, both fall off a cliff past 45 — means demographic targeting isn't the differentiator and can't explain the performance gap. Whatever's driving Myntra's edge, it isn't who they're reaching. It's what happens after that person lands.",
+
+    searchTitle: "Winning the rival's own name",
     search:
       "The standout signal in the entire dataset: Myntra's #1 search term driving traffic is literally \"ajio\", up <span class=\"fig m\">483% YoY</span>. That's Myntra intercepting comparison-intent search for its own rival — arguably the highest-value keyword real estate in this category, since anyone typing a competitor's name is already mid-decision, and Myntra is winning that moment on its own site. Ajio's SEO footprint is the mirror opposite: <span class=\"fig a\">2×</span> the organic keywords but a third of Myntra's top-3 ranking rate — breadth without depth, a content strategy optimized for coverage rather than intent.",
+
+    referralTitle: "The traffic only flows one way",
     referral:
       "The one chart every Ajio growth marketer should already have on a dashboard: Myntra is Ajio's single most identifiable referral source (<span class=\"fig m\">19.19%</span>), while Ajio barely registers for Myntra (<span class=\"fig a\">1.53%</span>, 9th place — behind its own coupon microsite). Traffic is flowing from the smaller brand to the bigger one far more than the reverse, a pattern that, left alone, reinforces the incumbent rather than erodes it.",
+
+    rankingsTitle: "Context changes everything",
     rankings:
       "The gap doesn't just persist across every ranking cut, it compounds as the lens narrows to India specifically — from a global rank <span class=\"fig\">6.7×</span> apart to a virtual tie in category standing that's nonetheless still a loss. In a two-horse domestic race, #2 is a very different market position than a #229-vs-#1,543 global chart makes it look.",
+
+    competitorsTitle: "Whose peer group is this, anyway?",
     competitors:
       "Worth noting for what it implies about brand perception: SimilarWeb's own affinity model can't find Ajio a closer domestic peer than international resale marketplaces (ThredUp, Depop, Vestiaire Collective) — its audience behavior doesn't cleanly resemble any other major Indian fashion e-tailer's, for better or worse. Myntra, by contrast, sits in a competitive set (Flipkart, Amazon.in, Nykaa Fashion) any category strategist would recognize instantly.",
+
+    landscapeTitle: "A much bigger game",
     landscape:
       "Zoom out one level and this whole rivalry is a subplot: Amazon.in and Flipkart's combined visits run roughly <span class=\"fig\">4.7×</span> Myntra and Ajio's combined total. Neither fashion-first platform is fighting for overall e-commerce share in India right now — they're fighting for the fashion vertical specifically, and that's a fight Myntra is currently winning by a wide margin.",
   },
