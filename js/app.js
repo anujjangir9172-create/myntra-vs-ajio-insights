@@ -30,6 +30,8 @@
     renderFullTable();
     renderMarquee();
     initTheme();
+    initMobileMenu();
+    initBoomerangHero();
     initScrollReveal();
     initStatCounters();
     initScrollProgress();
@@ -267,18 +269,170 @@
 
   // ---------- Theme toggle ----------
   function initTheme() {
-    const btn = $("#themeToggle");
     const stored = safeGet("theme");
     if (stored) document.documentElement.setAttribute("data-theme", stored);
 
-    btn.addEventListener("click", () => {
+    function toggle() {
       const current = document.documentElement.getAttribute("data-theme");
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       const isDark = current ? current === "dark" : prefersDark;
       const next = isDark ? "light" : "dark";
       document.documentElement.setAttribute("data-theme", next);
       safeSet("theme", next);
+    }
+
+    document.querySelectorAll("#themeToggle, #mobileThemeToggle").forEach((btn) => {
+      btn.addEventListener("click", toggle);
     });
+  }
+
+  // ---------- Mobile menu drawer ----------
+  function initMobileMenu() {
+    const toggle = $("#menuToggle");
+    const overlay = $("#mobileOverlay");
+    const drawer = $("#mobileDrawer");
+    if (!toggle || !overlay || !drawer) return;
+
+    function setOpen(open) {
+      toggle.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      overlay.classList.toggle("is-open", open);
+      drawer.classList.toggle("is-open", open);
+      document.body.style.overflow = open ? "hidden" : "";
+    }
+
+    toggle.addEventListener("click", () => setOpen(!drawer.classList.contains("is-open")));
+    overlay.addEventListener("click", () => setOpen(false));
+    drawer.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setOpen(false)));
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setOpen(false);
+    });
+  }
+
+  // ---------- Boomerang hero video background ----------
+  function initBoomerangHero() {
+    const container = $("#heroBg");
+    if (!container) return;
+
+    const video = document.createElement("video");
+    video.src = "assets/hero-loop.mp4";
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = "auto";
+    video.setAttribute("aria-hidden", "true");
+
+    // If the video can't load (network error, unsupported format, stalls
+    // past a reasonable timeout), just hide it — the scrim/spotlight over
+    // the plain hero background is a fully fine fallback on its own.
+    const failSafe = setTimeout(() => {
+      video.style.display = "none";
+    }, 6000);
+    video.addEventListener("error", () => {
+      clearTimeout(failSafe);
+      video.style.display = "none";
+    });
+    video.addEventListener("loadedmetadata", () => clearTimeout(failSafe), { once: true });
+
+    // Reduced motion: show a single still frame, no capture/playback loop.
+    if (reduceMotion()) {
+      video.loop = false;
+      video.addEventListener(
+        "loadeddata",
+        () => {
+          video.currentTime = 0;
+          video.pause();
+        },
+        { once: true }
+      );
+      container.appendChild(video);
+      return;
+    }
+
+    const canvas = document.createElement("canvas");
+    canvas.style.display = "none";
+    container.append(video, canvas);
+
+    const frames = [];
+    const MAX_WIDTH = 720;
+    let capturing = true;
+    let lastTime = -1;
+
+    function captureFrame() {
+      if (!capturing || video.readyState < 2) return;
+      if (video.currentTime === lastTime) return;
+      lastTime = video.currentTime;
+      const vw = video.videoWidth;
+      const vh = video.videoHeight;
+      if (!vw || !vh) return;
+      const scale = Math.min(1, MAX_WIDTH / vw);
+      const w = Math.round(vw * scale);
+      const h = Math.round(vh * scale);
+      const c = document.createElement("canvas");
+      c.width = w;
+      c.height = h;
+      const ctx = c.getContext("2d");
+      if (!ctx) return;
+      ctx.drawImage(video, 0, 0, w, h);
+      frames.push(c);
+    }
+
+    const hasVFC = typeof video.requestVideoFrameCallback === "function";
+    let rafId = 0;
+
+    function rafLoop() {
+      captureFrame();
+      if (capturing) rafId = requestAnimationFrame(rafLoop);
+    }
+    function vfcLoop() {
+      captureFrame();
+      if (capturing) video.requestVideoFrameCallback(vfcLoop);
+    }
+
+    function startPingPong() {
+      if (!frames.length) return;
+      canvas.width = frames[0].width;
+      canvas.height = frames[0].height;
+      const ctx = canvas.getContext("2d");
+      video.style.display = "none";
+      canvas.style.display = "block";
+
+      let index = 0;
+      let direction = 1;
+      let last = performance.now();
+      const interval = 1000 / 30;
+
+      requestAnimationFrame(function render(now) {
+        if (now - last >= interval) {
+          last = now;
+          ctx.drawImage(frames[index], 0, 0);
+          index += direction;
+          if (index >= frames.length - 1) {
+            index = frames.length - 1;
+            direction = -1;
+          } else if (index <= 0) {
+            index = 0;
+            direction = 1;
+          }
+        }
+        requestAnimationFrame(render);
+      });
+    }
+
+    video.addEventListener("ended", () => {
+      capturing = false;
+      cancelAnimationFrame(rafId);
+      if (frames.length) startPingPong();
+    });
+
+    video.addEventListener(
+      "loadedmetadata",
+      () => {
+        video.play().catch(() => {});
+        if (hasVFC) video.requestVideoFrameCallback(vfcLoop);
+        else rafId = requestAnimationFrame(rafLoop);
+      },
+      { once: true }
+    );
   }
 
   // ---------- Scroll-triggered reveal (sections fade in, bars grow) ----------

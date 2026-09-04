@@ -22,12 +22,41 @@
         <span class="vs-badge">VS</span>
         <span class="ajio-mark"><img src="assets/ajio-icon.avif" class="logo-ajio-icon" alt="" width="22" height="22" />AJIO</span>
       </div>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">TOGGLE THEME</button>
+
+      <nav class="pill-nav" aria-label="Section navigation">
+        <a href="#kpis">Overview</a>
+        <a href="#visits">Traffic</a>
+        <a href="#geo">Markets</a>
+        <a href="#rankings">Standing</a>
+        <button class="theme-toggle theme-toggle-pill" id="themeToggle" type="button" aria-label="Toggle dark mode">Theme</button>
+      </nav>
+
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+      </button>
     </div>
   </header>
 
+  <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
+  <div class="mobile-drawer" id="mobileDrawer">
+    <nav aria-label="Mobile section navigation">
+      <a href="#kpis">Overview</a>
+      <a href="#visits">Traffic</a>
+      <a href="#sources">Acquisition</a>
+      <a href="#geo">Markets</a>
+      <a href="#demo">Audience</a>
+      <a href="#rankings">Standing</a>
+      <a href="#competitors">Landscape</a>
+      <a href="#rawdata">Full data</a>
+    </nav>
+    <button class="btn btn-solid mobile-theme-toggle" id="mobileThemeToggle" type="button">Toggle theme</button>
+  </div>
+
   <main>
     <section class="hero">
+      <div class="hero-bg" id="heroBg" aria-hidden="true"></div>
+      <div class="hero-scrim" aria-hidden="true"></div>
       <div class="wrap">
         <span class="badge-chip">Comparative Analysis</span>
         <h1>Website performance<br /><em class="hl-blue">Myntra</em> vs <em class="hl-ajio">Ajio</em></h1>

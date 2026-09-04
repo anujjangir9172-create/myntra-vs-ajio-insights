@@ -204,6 +204,137 @@ a { color: var(--text-primary); }
   color: var(--gold);
 }
 
+/* ---------- Pill nav (desktop) ---------- */
+
+.pill-nav {
+  display: none;
+  align-items: center;
+  gap: 2px;
+  background: color-mix(in srgb, var(--surface-1) 72%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 6px 6px 6px 22px;
+}
+
+.pill-nav a {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 9px 13px;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+.pill-nav a:hover { color: var(--gold); }
+
+.theme-toggle-pill {
+  margin-left: 8px;
+  border-radius: 999px;
+  padding: 9px 18px;
+}
+
+/* ---------- Hamburger (mobile) ---------- */
+
+.menu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.menu-toggle svg {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.menu-toggle .icon-close { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+.menu-toggle.is-open .icon-menu { opacity: 0; transform: rotate(90deg) scale(0.5); }
+.menu-toggle.is-open .icon-close { opacity: 1; transform: rotate(0) scale(1); }
+
+@media (min-width: 900px) {
+  .pill-nav { display: flex; }
+  .menu-toggle { display: none; }
+}
+
+/* ---------- Mobile drawer ---------- */
+
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: color-mix(in srgb, var(--text-primary) 45%, transparent);
+  z-index: 150;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.mobile-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  width: 84%;
+  max-width: 340px;
+  background: var(--surface-1);
+  border-left: 1px solid var(--hairline);
+  box-shadow: -16px 0 48px rgba(0, 0, 0, 0.18);
+  padding: 96px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.mobile-drawer.is-open { transform: translateX(0); }
+
+.mobile-drawer nav { display: flex; flex-direction: column; }
+
+.mobile-drawer nav a {
+  font-family: var(--font-display);
+  font-size: 21px;
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--hairline);
+  opacity: 0;
+  transform: translateX(20px);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+.mobile-drawer.is-open nav a { opacity: 1; transform: translateX(0); }
+.mobile-drawer nav a:nth-child(1) { transition-delay: 0.05s; }
+.mobile-drawer nav a:nth-child(2) { transition-delay: 0.09s; }
+.mobile-drawer nav a:nth-child(3) { transition-delay: 0.13s; }
+.mobile-drawer nav a:nth-child(4) { transition-delay: 0.17s; }
+.mobile-drawer nav a:nth-child(5) { transition-delay: 0.21s; }
+.mobile-drawer nav a:nth-child(6) { transition-delay: 0.25s; }
+.mobile-drawer nav a:nth-child(7) { transition-delay: 0.29s; }
+.mobile-drawer nav a:nth-child(8) { transition-delay: 0.33s; }
+
+.mobile-theme-toggle {
+  margin-top: 28px;
+  width: 100%;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: transform 0.5s ease, opacity 0.5s ease, background 0.15s ease;
+  transition-delay: 0.37s;
+}
+.mobile-drawer.is-open .mobile-theme-toggle { opacity: 1; transform: translateX(0); }
+
+@media (min-width: 900px) {
+  .mobile-overlay,
+  .mobile-drawer { display: none; }
+}
+
 /* ---------- Eyebrow labels ---------- */
 
 .eyebrow {
@@ -902,9 +1033,32 @@ html { scroll-behavior: smooth; }
   inset: -10%;
   background: radial-gradient(520px circle at var(--spot-x, 50%) var(--spot-y, 25%), color-mix(in srgb, var(--gold) 16%, transparent), transparent 65%);
   pointer-events: none;
-  z-index: 0;
+  z-index: 2;
 }
-.hero .wrap { position: relative; z-index: 1; }
+.hero .wrap { position: relative; z-index: 3; }
+
+/* ---------- Hero boomerang video background ---------- */
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.hero-bg video,
+.hero-bg canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: color-mix(in srgb, var(--page-plane) 82%, transparent);
+  pointer-events: none;
+}
 
 /* ---------- Marquee ---------- */
 

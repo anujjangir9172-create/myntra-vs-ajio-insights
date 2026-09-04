@@ -35,6 +35,14 @@ affiliation with or endorsement by Myntra or Reliance/Ajio implied):
   fashion photography from [Unsplash](https://unsplash.com), used under
   the [Unsplash License](https://unsplash.com/license) (free for
   commercial and personal use).
+- `hero-loop.mp4` — a short clothing-shop clip from [Pexels](https://www.pexels.com)
+  by Kampus Production, used under the
+  [Pexels License](https://www.pexels.com/license/) (free for commercial
+  use, no attribution required). Captured client-side into a forward/
+  reverse "boomerang" canvas loop for the hero background (see
+  `initBoomerangHero` in `js/app.js`); falls back to a static first frame
+  under `prefers-reduced-motion`, and hides itself entirely if it fails
+  to load.
 
 ## Data
 
